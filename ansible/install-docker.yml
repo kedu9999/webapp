@@ -1,0 +1,22 @@
+---
+- hosts: test
+  become: yes
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        update_cache: yes
+
+    - name: Install Docker
+      shell: |
+        curl -fsSL https://get.docker.com | sh
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
