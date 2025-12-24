@@ -11,7 +11,7 @@
           - software-properties-common
         update_cache: yes
 
-    # - name: Install Docker
+    ## - name: Install Docker
     #   apt:
     #    name: docker.io
     #    state: present
