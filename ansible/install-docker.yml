@@ -11,10 +11,10 @@
           - software-properties-common
         update_cache: yes
 
-    - name: Install Docker
-      apt:
-       name: docker.io
-       state: present
+    # - name: Install Docker
+    #   apt:
+    #    name: docker.io
+    #    state: present
 
     - name: Start Docker
       service:
