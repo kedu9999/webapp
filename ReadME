@@ -1,1 +1,98 @@
-## Readme
+🔷 OVERALL FLOW (what you are building)
+Developer → GitHub → Jenkins (CI)
+        → Build Docker Image
+        → Push to Docker Hub
+        → Deploy to Kubernetes (CD)
+
+1️⃣ Jenkins Prerequisites (VERY IMPORTANT)
+Jenkins must have:
+
+Docker installed
+
+kubectl installed
+
+Access to Kubernetes cluster
+
+Required plugins:
+
+Git
+
+GitHub
+
+Docker Pipeline
+
+Credentials Binding
+
+Kubernetes CLI (optional but helpful)
+
+2️⃣ Configure GitHub Login (Source Code Access)
+🔐 Step 1: Create GitHub Token
+
+GitHub → Settings → Developer settings → Tokens
+Scopes:
+
+repo
+
+workflow
+
+🔐 Step 2: Add GitHub Credentials in Jenkins
+
+Jenkins → Manage Jenkins → Credentials → Global → Add Credentials
+
+Field	Value
+Kind	Username with password
+Username	GitHub username
+Password	GitHub token
+ID	github-creds
+
+3️⃣ Configure Docker Hub Login
+🔐 Step 1: Docker Hub Credentials
+
+Jenkins → Credentials → Add
+
+Field	Value
+Kind	Username with password
+Username	DockerHub username
+Password	DockerHub password / token
+ID	dockerhub-creds
+
+4️⃣ Configure Kubernetes Login (kubectl access)
+🔐 Option A (Most Common): kubeconfig file
+Step 1: Copy kubeconfig
+
+From your k8s master / local machine:
+
+cat ~/.kube/config
+
+Step 2: Add kubeconfig to Jenkins
+
+Jenkins → Credentials → Add
+
+Field	Value
+Kind	Secret file
+File	kubeconfig
+ID	kubeconfig-creds
+
+✔ This is enough to authenticate kubectl
+
+5️⃣ GitHub Webhook (Auto Trigger)
+In GitHub Repo:
+
+Settings → Webhooks → Add webhook
+
+Field	Value
+Payload URL	http://<jenkins-url>/github-webhook/
+Content type	application/json
+Events	Push
+6️⃣ Jenkinsfile 
+
+7️⃣ Kubernetes Deployment (Dynamic Image Tag)
+
+8️⃣ How This Meets Your Requirements
+
+✔ Code merged to GitHub
+✔ Jenkins auto-triggers build
+✔ Docker image built every time
+✔ Docker image pushed to Docker Hub
+✔ Kubernetes deployment updated
+✔ Production website updated automatically
